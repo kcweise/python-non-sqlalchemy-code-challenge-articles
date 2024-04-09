@@ -1,4 +1,7 @@
 class Article:
+    
+    all = []
+    
     def __init__(self, author, magazine, title):
         self.author = author
         self.magazine = magazine
@@ -6,6 +9,7 @@ class Article:
             self._title = title
         else:
             raise Exception("Title must be a string with number of characters between 5 and 50")
+        Article.all.append(self)
         
     @property
     def title(self):
@@ -14,13 +18,27 @@ class Article:
     @title.setter
     def title(self, title):
         if hasattr(self, "title"):
-            raise Exception("Title cannot change.")
+            raise Exception("Title already exists in Article class and cannot be changed.")
         else:
             self._title = title
         
 class Author:
     def __init__(self, name):
-        self.name = name
+        if isinstance(name, str) and len(name)>0:
+            self._name = name
+        else:
+            raise Exception("Name must be a string with number of characters between 2 and 16")
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        if hasattr(self, "name"):
+            raise Exception("Name already exists in Author class, and cannot be changed.")
+        else:
+            self._name = name
 
     def articles(self):
         pass
