@@ -41,10 +41,11 @@ class Author:
             self._name = name
 
     def articles(self):
-        pass
+        return[article for article in Article.all if article.author == self]
 
     def magazines(self):
-        pass
+        unique_mags = {article.magazine for article in self.articles()}
+        return list(unique_mags)
 
     def add_article(self, magazine, title):
         pass
