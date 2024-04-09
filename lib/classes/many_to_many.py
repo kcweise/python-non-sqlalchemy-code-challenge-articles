@@ -2,7 +2,21 @@ class Article:
     def __init__(self, author, magazine, title):
         self.author = author
         self.magazine = magazine
-        self.title = title
+        if isinstance(title, str) and 5<=len(title)<=50:
+            self._title = title
+        else:
+            raise Exception("Title must be a string with number of characters between 5 and 50")
+        
+    @property
+    def title(self):
+        return self._title
+    
+    @title.setter
+    def title(self, title):
+        if hasattr(self, "title"):
+            raise Exception("Title cannot change.")
+        else:
+            self._title = title
         
 class Author:
     def __init__(self, name):
