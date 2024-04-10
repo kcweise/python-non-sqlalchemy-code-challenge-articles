@@ -51,9 +51,12 @@ class Author:
         new_article = Article(author = self, magazine = magazine, title = title)
         return new_article
         
-
     def topic_areas(self):
-        pass
+        unique_topics = {article.magazine.category for article in self.articles()}
+        if len(unique_topics) == 0:
+            return None
+        else:
+            return list(unique_topics)
 
 class Magazine:
     def __init__(self, name, category):
