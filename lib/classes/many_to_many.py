@@ -80,7 +80,7 @@ class Magazine:
     
     @category.setter
     def category(self, category):
-        if isinstance(category, str) and len(category)>=0:
+        if isinstance(category, str) and len(category)>0:
             self._category = category
         else:
             raise Exception("Category must be a string with more than 0 characters")
@@ -89,10 +89,30 @@ class Magazine:
         return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        pass
+        unique_auth = {article.author for article in self.articles()}
+        return list(unique_auth)
+        
+            
+        
+                
+        
 
     def article_titles(self):
         pass
 
     def contributing_authors(self):
-        pass
+        auth_art_count = {}
+        for article in self.articles():
+            author = article.author
+            if author in auth_art_count:
+                auth_art_count[author] += 1
+            else:
+                auth_art_count[author] = 1
+                
+        contribs = [author for author, count in auth_art_count.items() if count > 2]
+        
+        if len(contribs)>0:
+            return contribs
+        else:
+            return None   
+            
