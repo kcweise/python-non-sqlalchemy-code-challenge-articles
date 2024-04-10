@@ -17,7 +17,7 @@ class Article:
     
     @title.setter
     def title(self, title):
-        if hasattr(self, "title"):
+        if hasattr(self, "_title"):
             raise Exception("Title already exists in Article class and cannot be changed.")
         else:
             self._title = title
@@ -27,7 +27,7 @@ class Author:
         if isinstance(name, str) and len(name)>0:
             self._name = name
         else:
-            raise Exception("Name must be a string with number of characters between 2 and 16")
+            raise Exception("Name must be a string with more than 0 characters")
 
     @property
     def name(self):
@@ -35,7 +35,7 @@ class Author:
     
     @name.setter
     def name(self, name):
-        if hasattr(self, "name"):
+        if hasattr(self, "_name"):
             raise Exception("Name already exists in Author class, and cannot be changed.")
         else:
             self._name = name
@@ -48,7 +48,9 @@ class Author:
         return list(unique_mags)
 
     def add_article(self, magazine, title):
-        pass
+        new_article = Article(author = self, magazine = magazine, title = title)
+        return new_article
+        
 
     def topic_areas(self):
         pass
@@ -57,9 +59,31 @@ class Magazine:
     def __init__(self, name, category):
         self.name = name
         self.category = category
-
+        
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        if isinstance(name, str) and 2<=len(name)<=16:
+            self._name = name
+        else:
+            raise Exception("Name must be a string with between 2 and 16 characters")
+        
+    @property
+    def category(self):
+        return self._category
+    
+    @category.setter
+    def category(self, category):
+        if isinstance(category, str) and len(category)>=0:
+            self._category = category
+        else:
+            raise Exception("Category must be a string with more than 0 characters")
+        
     def articles(self):
-        pass
+        return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
         pass
