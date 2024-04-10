@@ -59,9 +59,13 @@ class Author:
             return list(unique_topics)
 
 class Magazine:
+    
+    all_mags = []
+    
     def __init__(self, name, category):
         self.name = name
         self.category = category
+        self.__class__.all_mags.append(self)
         
     @property
     def name(self):
@@ -95,10 +99,11 @@ class Magazine:
     def article_titles(self):
         mag_titles = [article.title for article in self.articles()]
         
-        if len(mag_titles) >0:
-            return mag_titles
-        else:
-            return None
+        # if len(mag_titles) >0:
+        #     return mag_titles
+        # else:
+        #     return None
+        return mag_titles if mag_titles else None 
 
     def contributing_authors(self):
         auth_art_count = {}
@@ -111,8 +116,27 @@ class Magazine:
                 
         contribs = [author for author, count in auth_art_count.items() if count > 2]
         
-        if len(contribs)>0:
-            return contribs
-        else:
-            return None   
+        # if len(contribs)>0:
+        #     return contribs
+        # else:
+        #     return None
+        
+        return contribs if contribs else None  
+    
+    @classmethod
+    def top_publisher(cls):
+        if not cls.all_mags or not Article.all:
+            return None
+        
+        mag_art_counts = {}
+        for mag in cls.all_mags:
+            mag_art_counts[mag] = len(mag.articles())
             
+        if mag_art_counts:
+            top_pub = max(mag_art_counts, key = mag_art_counts.get)
+            return top_pub
+        else:
+            return None
+        
+        
+        
