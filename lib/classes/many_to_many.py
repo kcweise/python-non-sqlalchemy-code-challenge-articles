@@ -91,14 +91,14 @@ class Magazine:
     def contributors(self):
         unique_auth = {article.author for article in self.articles()}
         return list(unique_auth)
-        
-            
-        
-                
-        
 
     def article_titles(self):
-        pass
+        mag_titles = [article.title for article in self.articles()]
+        
+        if len(mag_titles) >0:
+            return mag_titles
+        else:
+            return None
 
     def contributing_authors(self):
         auth_art_count = {}
